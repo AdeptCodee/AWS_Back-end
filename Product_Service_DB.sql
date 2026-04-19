@@ -1,5 +1,6 @@
-drop table categories;
 drop table products;
+drop table categories;
+
 -- 1. Tạo bảng danh mục linh kiện
 CREATE TABLE categories (
     id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -62,4 +63,4 @@ INSERT INTO products (name, price, stock, category_id, product_image) VALUES ('T
 COMMIT;
 
 -- 4. Kiểm tra kết quả
-SELECT * FROM products ORDER BY id DESC;
+SELECT * FROM products ORDER BY id ASC;

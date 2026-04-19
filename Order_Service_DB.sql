@@ -1,0 +1,61 @@
+--------------------------------------------------------
+--  File created - Sunday-April-19-2026   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table ORDERS
+--------------------------------------------------------
+
+  CREATE TABLE "ORDER_SERVICE"."ORDERS" 
+   (	"ID" VARCHAR2(36 BYTE), 
+	"USER_ID" NUMBER, 
+	"TOTAL_PRICE" NUMBER(19,2), 
+	"STATUS" VARCHAR2(50 BYTE) DEFAULT 'pending', 
+	"CREATED_AT" TIMESTAMP (6) DEFAULT CURRENT_TIMESTAMP
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table ORDER_ITEMS
+--------------------------------------------------------
+
+  CREATE TABLE "ORDER_SERVICE"."ORDER_ITEMS" 
+   (	"ID" NUMBER GENERATED ALWAYS AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	"ORDER_ID" VARCHAR2(36 BYTE), 
+	"PRODUCT_ID" NUMBER, 
+	"QUANTITY" NUMBER, 
+	"PRICE" NUMBER(19,2)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
+REM INSERTING into ORDER_SERVICE.ORDERS
+SET DEFINE OFF;
+REM INSERTING into ORDER_SERVICE.ORDER_ITEMS
+SET DEFINE OFF;
+--------------------------------------------------------
+--  Constraints for Table ORDER_ITEMS
+--------------------------------------------------------
+
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" MODIFY ("PRODUCT_ID" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" MODIFY ("QUANTITY" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" MODIFY ("PRICE" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ORDERS
+--------------------------------------------------------
+
+  ALTER TABLE "ORDER_SERVICE"."ORDERS" MODIFY ("USER_ID" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDERS" MODIFY ("TOTAL_PRICE" NOT NULL ENABLE);
+  ALTER TABLE "ORDER_SERVICE"."ORDERS" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ORDER_ITEMS
+--------------------------------------------------------
+
+  ALTER TABLE "ORDER_SERVICE"."ORDER_ITEMS" ADD FOREIGN KEY ("ORDER_ID")
+	  REFERENCES "ORDER_SERVICE"."ORDERS" ("ID") ON DELETE CASCADE ENABLE;
